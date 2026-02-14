@@ -118,7 +118,13 @@ button:hover{
   transform:scale(1);
 }
 
-/* BACKGROUND GLOW */
+/* SCREEN 4 FIX */
+#screen4{
+  overflow:hidden;
+  position:relative;
+}
+
+/* GLOW */
 .glow{
   animation:glowbg 2s ease-in-out infinite alternate;
 }
@@ -127,16 +133,16 @@ button:hover{
   to{background:#ff9ac2;}
 }
 
-/* FALLING */
+/* FALL ANIMATION */
 @keyframes fall{
   0%{transform:translateY(-50px);opacity:1;}
   100%{transform:translateY(110vh);opacity:0;}
 }
 
 .falling-heart, .petal, .sparkle{
-  position:fixed;
+  position:absolute;
   pointer-events:none;
-  z-index:1;
+  z-index:2;
 }
 
 .falling-heart{
@@ -149,6 +155,7 @@ button:hover{
   animation:fall linear forwards;
 }
 
+/* SPARKLE */
 .sparkle{
   font-size:18px;
   animation:twinkle 1.5s ease-in-out forwards;
@@ -166,12 +173,12 @@ button:hover{
   100%{transform:translate(-50%,-50%) scale(3);opacity:0;}
 }
 .burst{
-  position:fixed;
+  position:absolute;
   left:50%;
   top:50%;
   font-size:30px;
   pointer-events:none;
-  z-index:10;
+  z-index:3;
   animation:burst 1s ease-out forwards;
 }
 
@@ -252,14 +259,15 @@ function openGift(){
   if(started) return;
   started=true;
 
-  document.getElementById("screen4").classList.add("glow");
+  const screen=document.getElementById("screen4");
+  screen.classList.add("glow");
 
-  // Love burst dari tengah
+  // Love burst
   for(let i=0;i<25;i++){
     const burst=document.createElement("div");
     burst.className="burst";
     burst.innerHTML="💞";
-    document.body.appendChild(burst);
+    screen.appendChild(burst);
     setTimeout(()=>burst.remove(),1000);
   }
 
@@ -268,9 +276,9 @@ function openGift(){
     const heart=document.createElement("div");
     heart.className="falling-heart";
     heart.innerHTML="💖";
-    heart.style.left=Math.random()*100+"vw";
+    heart.style.left=Math.random()*100+"%";
     heart.style.animationDuration=(3+Math.random()*3)+"s";
-    document.body.appendChild(heart);
+    screen.appendChild(heart);
     setTimeout(()=>heart.remove(),6000);
   },300);
 
@@ -279,9 +287,9 @@ function openGift(){
     const petal=document.createElement("div");
     petal.className="petal";
     petal.innerHTML="🌸";
-    petal.style.left=Math.random()*100+"vw";
+    petal.style.left=Math.random()*100+"%";
     petal.style.animationDuration=(4+Math.random()*3)+"s";
-    document.body.appendChild(petal);
+    screen.appendChild(petal);
     setTimeout(()=>petal.remove(),7000);
   },400);
 
@@ -290,9 +298,9 @@ function openGift(){
     const spark=document.createElement("div");
     spark.className="sparkle";
     spark.innerHTML="✨";
-    spark.style.left=Math.random()*100+"vw";
-    spark.style.top=Math.random()*100+"vh";
-    document.body.appendChild(spark);
+    spark.style.left=Math.random()*100+"%";
+    spark.style.top=Math.random()*100+"%";
+    screen.appendChild(spark);
     setTimeout(()=>spark.remove(),1500);
   },300);
 }
