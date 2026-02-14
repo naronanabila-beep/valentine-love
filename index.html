@@ -236,8 +236,8 @@ button:hover{
     I love you with everything I have. 💖
   </div>
 
-  <!-- MUSIK -->
-  <audio id="bgmusic" src="musik.mp3" loop></audio>
+  <!-- MUSIK AUTOPLAY DARI AWAL -->
+  <audio id="bgmusic" src="musik.mp3" autoplay loop playsinline></audio>
 </div>
 
 <script>
@@ -270,10 +270,12 @@ function openGift(){
   const screen=document.getElementById("screen4");
   screen.classList.add("glow");
 
-  // MAINKAN MUSIK
   const bgmusic=document.getElementById("bgmusic");
-  bgmusic.volume = 0.3; // volume lembut
-  bgmusic.play();
+  bgmusic.volume = 0.3;
+  const playPromise = bgmusic.play();
+  if(playPromise !== undefined){
+    playPromise.catch(()=>{ console.log("Autoplay diblokir, musik akan start setelah klik"); });
+  }
 
   // Love burst
   for(let i=0;i<25;i++){
@@ -325,9 +327,24 @@ function openLetter(){
   const bgmusic=document.getElementById("bgmusic");
   if(bgmusic.paused){
     bgmusic.volume = 0.3;
-    bgmusic.play();
+    const playPromise = bgmusic.play();
+    if(playPromise !== undefined){
+      playPromise.catch(()=>{ console.log("Autoplay diblokir"); });
+    }
   }
 }
+
+// Coba autoplay musik saat halaman load
+window.addEventListener('load', ()=>{
+  const bgmusic=document.getElementById("bgmusic");
+  bgmusic.volume = 0.3;
+  const playPromise = bgmusic.play();
+  if (playPromise !== undefined) {
+      playPromise.catch(_ => {
+          console.log("Autoplay diblokir, musik akan start setelah klik user");
+      });
+  }
+});
 </script>
 
 </body>
