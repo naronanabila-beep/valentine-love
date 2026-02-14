@@ -7,7 +7,7 @@
 <style>
 body{
   margin:0;
-  font-family: 'Segoe UI', cursive;
+  font-family:'Segoe UI', cursive;
   background: linear-gradient(135deg,#ffd6e7,#ffc2d1);
   overflow:hidden;
 }
@@ -78,6 +78,7 @@ button:hover{
   cursor:pointer;
   margin-top:20px;
   transition:0.6s;
+  z-index:5;
 }
 
 .envelope:before{
@@ -109,6 +110,7 @@ button:hover{
   opacity:0;
   transform:scale(0.8);
   transition:1s;
+  z-index:5;
 }
 
 .letter.open{
@@ -116,28 +118,63 @@ button:hover{
   transform:scale(1);
 }
 
-/* FALLING HEART */
-.falling-heart{
+/* BACKGROUND GLOW */
+.glow{
+  animation:glowbg 2s ease-in-out infinite alternate;
+}
+@keyframes glowbg{
+  from{background:#ffd6e7;}
+  to{background:#ff9ac2;}
+}
+
+/* FALLING */
+@keyframes fall{
+  0%{transform:translateY(-50px);opacity:1;}
+  100%{transform:translateY(110vh);opacity:0;}
+}
+
+.falling-heart, .petal, .sparkle{
   position:fixed;
-  top:-50px;
-  font-size:30px;
+  pointer-events:none;
+  z-index:1;
+}
+
+.falling-heart{
+  font-size:28px;
   animation:fall linear forwards;
-  z-index:0;
 }
 
 .petal{
-  position:fixed;
-  top:-20px;
   font-size:24px;
   animation:fall linear forwards;
-  z-index:0;
 }
 
-@keyframes fall{
-  to{
-    transform:translateY(110vh);
-  }
+.sparkle{
+  font-size:18px;
+  animation:twinkle 1.5s ease-in-out forwards;
 }
+
+@keyframes twinkle{
+  0%{opacity:0;}
+  50%{opacity:1;}
+  100%{opacity:0;}
+}
+
+/* LOVE BURST */
+@keyframes burst{
+  0%{transform:translate(-50%,-50%) scale(0);opacity:1;}
+  100%{transform:translate(-50%,-50%) scale(3);opacity:0;}
+}
+.burst{
+  position:fixed;
+  left:50%;
+  top:50%;
+  font-size:30px;
+  pointer-events:none;
+  z-index:10;
+  animation:burst 1s ease-out forwards;
+}
+
 </style>
 </head>
 
@@ -189,6 +226,8 @@ button:hover{
 </div>
 
 <script>
+let started=false;
+
 function checkPassword(){
   var pass=document.getElementById("password").value;
   if(pass==="04112025"){
@@ -210,8 +249,21 @@ function moveNo(){
 }
 
 function openGift(){
-  document.getElementById("bgmusic").play();
+  if(started) return;
+  started=true;
 
+  document.getElementById("screen4").classList.add("glow");
+
+  // Love burst dari tengah
+  for(let i=0;i<25;i++){
+    const burst=document.createElement("div");
+    burst.className="burst";
+    burst.innerHTML="💞";
+    document.body.appendChild(burst);
+    setTimeout(()=>burst.remove(),1000);
+  }
+
+  // Falling love
   setInterval(()=>{
     const heart=document.createElement("div");
     heart.className="falling-heart";
@@ -222,6 +274,7 @@ function openGift(){
     setTimeout(()=>heart.remove(),6000);
   },300);
 
+  // Falling flower
   setInterval(()=>{
     const petal=document.createElement("div");
     petal.className="petal";
@@ -230,12 +283,24 @@ function openGift(){
     petal.style.animationDuration=(4+Math.random()*3)+"s";
     document.body.appendChild(petal);
     setTimeout(()=>petal.remove(),7000);
-  },500);
+  },400);
+
+  // Sparkle
+  setInterval(()=>{
+    const spark=document.createElement("div");
+    spark.className="sparkle";
+    spark.innerHTML="✨";
+    spark.style.left=Math.random()*100+"vw";
+    spark.style.top=Math.random()*100+"vh";
+    document.body.appendChild(spark);
+    setTimeout(()=>spark.remove(),1500);
+  },300);
 }
 
 function openLetter(){
   document.getElementById("envelope").classList.add("open");
   document.getElementById("letter").classList.add("open");
+  document.getElementById("bgmusic").play();
 }
 </script>
 
