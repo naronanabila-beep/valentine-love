@@ -3,207 +3,225 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Sweet Valentine 💖</title>
+<title>For My Love 💖</title>
 
 <style>
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Georgia', serif;
-    background: linear-gradient(to top, #ffd1dc, #ff9eb5);
-    overflow: hidden;
-    text-align: center;
+body{
+    margin:0;
+    font-family:Georgia, serif;
+    background:linear-gradient(to top,#ffd1dc,#ff9eb5);
+    overflow:hidden;
+    text-align:center;
 }
 
-/* Love besar background */
-.big-heart {
-    position: absolute;
-    font-size: 260px;
-    color: rgba(255, 20, 147, 0.2);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: pulse 2.5s infinite;
-    text-shadow: 0 0 40px rgba(255, 105, 180, 0.6);
+.screen{
+    display:none;
+    height:100vh;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
 }
 
-@keyframes pulse {
-    0% { transform: translate(-50%, -50%) scale(1); }
-    50% { transform: translate(-50%, -50%) scale(1.15); }
-    100% { transform: translate(-50%, -50%) scale(1); }
+.active{
+    display:flex;
 }
 
-h1 {
-    margin-top: 40px;
-    color: #b30059;
-    font-size: 30px;
+h1,h2{
+    color:#b30059;
 }
 
-/* Envelope */
-.letter-container {
-    position: relative;
-    margin-top: 100px;
+button{
+    padding:10px 20px;
+    border:none;
+    border-radius:20px;
+    font-size:16px;
+    cursor:pointer;
+    margin:10px;
+    background:#ff4d88;
+    color:white;
 }
 
-.envelope {
-    width: 340px;
-    height: 240px;
-    background: #fff;
-    margin: auto;
-    position: relative;
-    border-radius: 15px;
-    box-shadow: 0 15px 40px rgba(255, 105, 180, 0.4);
-    cursor: pointer;
-    overflow: hidden;
-    transition: transform 0.3s;
+button:hover{
+    background:#ff1a75;
 }
 
-.envelope:hover {
-    transform: scale(1.05);
-}
-
-.flap {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #ff6f91;
-    clip-path: polygon(0 0, 50% 50%, 100% 0);
-    transition: transform 1s;
-    transform-origin: top;
-}
-
-.letter {
-    position: absolute;
-    width: 90%;
-    height: 90%;
-    background: linear-gradient(to bottom, #fff0f5, #ffe4ec);
-    top: 5%;
-    left: 5%;
-    padding: 25px;
-    box-sizing: border-box;
-    border-radius: 12px;
-    opacity: 0;
-    transition: opacity 1s ease 1s;
-    font-size: 17px;
-    line-height: 1.8;
-    color: #b30059;
-}
-
-.open .flap {
-    transform: rotateX(180deg);
-}
-
-.open .letter {
-    opacity: 1;
+/* tombol no kabur */
+#noBtn{
+    position:absolute;
 }
 
 /* Love jatuh */
-.falling-heart {
-    position: absolute;
-    color: #ff2e63;
-    font-size: 24px;
-    animation: fall linear infinite;
+.falling-heart{
+    position:absolute;
+    font-size:22px;
+    animation:fall linear infinite;
+}
+@keyframes fall{
+    0%{transform:translateY(-10vh);}
+    100%{transform:translateY(110vh);}
 }
 
-@keyframes fall {
-    0% { transform: translateY(-10vh); }
-    100% { transform: translateY(110vh); }
+/* Envelope */
+.envelope{
+    width:340px;
+    height:240px;
+    background:white;
+    border-radius:15px;
+    position:relative;
+    cursor:pointer;
+    box-shadow:0 15px 40px rgba(255,105,180,0.4);
+    overflow:hidden;
+}
+
+.flap{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#ff6f91;
+    clip-path:polygon(0 0,50% 50%,100% 0);
+    transition:1s;
+    transform-origin:top;
+}
+
+.letter{
+    position:absolute;
+    width:90%;
+    height:90%;
+    background:#fff0f5;
+    top:5%;
+    left:5%;
+    padding:20px;
+    border-radius:12px;
+    opacity:0;
+    transition:1s 1s;
+    color:#b30059;
+    line-height:1.7;
+}
+
+.open .flap{
+    transform:rotateX(180deg);
+}
+.open .letter{
+    opacity:1;
 }
 
 /* LOVE MELEDAK */
-.explode-heart {
-    position: absolute;
-    font-size: 30px;
-    animation: explode 1s ease-out forwards;
+.explode{
+    position:absolute;
+    font-size:28px;
+    animation:boom 1s forwards;
 }
-
-@keyframes explode {
-    0% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--x), var(--y)) scale(1.5);
-        opacity: 0;
-    }
+@keyframes boom{
+    0%{transform:translate(-50%,-50%) scale(1);opacity:1;}
+    100%{transform:translate(var(--x),var(--y)) scale(1.5);opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="big-heart">❤️</div>
+<!-- SCREEN 1 -->
+<div class="screen active" id="screen1">
+    <h2>Masukan Password 💌</h2>
+    <input type="password" id="passwordInput" placeholder="Passwordnya...">
+    <button onclick="checkPassword()">Masuk</button>
+</div>
 
-<h1>For My Sweet Valentine 💌</h1>
+<!-- SCREEN 2 -->
+<div class="screen" id="screen2">
+    <h2>Passwordnya bener 🥺💖</h2>
+    <p>Keren banget sayang aku. Jangan lupa yaa 04-11-2025 adalah hari kita resmi jadi cerita indah satu sama lain ✨</p>
+    <button onclick="nextScreen(3)">Siap untuk next love 💘</button>
+</div>
 
-<div class="letter-container">
+<!-- SCREEN 3 -->
+<div class="screen" id="screen3">
+    <h1>Will You Be My Valentine? 💖</h1>
+    <button onclick="yesAnswer()">YES 💕</button>
+    <button id="noBtn" onmouseover="moveNo()">NO 😏</button>
+</div>
+
+<!-- SCREEN 4 -->
+<div class="screen" id="screen4">
+    <h2>Yayyy 💖 Thank you for being my Valentine!</h2>
+    
     <div class="envelope" onclick="openLetter(this)">
         <div class="flap"></div>
         <div class="letter">
-            <p>
             Hi ayang, makasi ya udah hadir di hidup aku dan isi hari-hari aku yang suram ini jadi berwarna. 
             Kehadiran ayang selalu punya arti tersendiri buat aku. 
             Aku bahagia banget punya ayang. 
             Tolong cintai aku terus yaa. 
             I love you with everything I have. 💖
-            </p>
         </div>
     </div>
+
+    <audio id="music" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3">
+    </audio>
 </div>
 
-<!-- Musik otomatis -->
-<audio autoplay loop>
-  <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
-</audio>
-
 <script>
-let exploded = false;
+function nextScreen(num){
+    document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+    document.getElementById("screen"+num).classList.add("active");
+}
 
-function openLetter(element) {
-    element.classList.toggle("open");
-
-    if (!exploded) {
-        explodeHearts();
-        exploded = true;
+function checkPassword(){
+    let pass=document.getElementById("passwordInput").value;
+    if(pass==="04112025"){
+        nextScreen(2);
+    }else{
+        alert("Salahhh 🥺 coba lagi");
     }
 }
 
-/* Love jatuh */
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.classList.add("falling-heart");
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
-    document.body.appendChild(heart);
-
-    setTimeout(() => {
-        heart.remove();
-    }, 5000);
+function yesAnswer(){
+    nextScreen(4);
+    document.getElementById("music").play();
 }
 
-setInterval(createHeart, 300);
+function moveNo(){
+    let btn=document.getElementById("noBtn");
+    btn.style.top=Math.random()*80+"%";
+    btn.style.left=Math.random()*80+"%";
+}
 
-/* LOVE MELEDAK FUNCTION */
-function explodeHearts() {
-    for (let i = 0; i < 25; i++) {
-        const heart = document.createElement("div");
-        heart.classList.add("explode-heart");
-        heart.innerHTML = "💖";
-        heart.style.left = "50%";
-        heart.style.top = "50%";
+/* Love jatuh */
+function createHeart(){
+    const heart=document.createElement("div");
+    heart.classList.add("falling-heart");
+    heart.innerHTML="❤️";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=(Math.random()*3+2)+"s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),5000);
+}
+setInterval(createHeart,300);
 
-        let x = (Math.random() - 0.5) * 600 + "px";
-        let y = (Math.random() - 0.5) * 600 + "px";
+/* Surat buka + meledak */
+let exploded=false;
+function openLetter(el){
+    el.classList.toggle("open");
+    if(!exploded){
+        explodeLove();
+        exploded=true;
+    }
+}
 
-        heart.style.setProperty("--x", x);
-        heart.style.setProperty("--y", y);
-
+function explodeLove(){
+    for(let i=0;i<25;i++){
+        const heart=document.createElement("div");
+        heart.classList.add("explode");
+        heart.innerHTML="💖";
+        heart.style.left="50%";
+        heart.style.top="50%";
+        let x=(Math.random()-0.5)*600+"px";
+        let y=(Math.random()-0.5)*600+"px";
+        heart.style.setProperty("--x",x);
+        heart.style.setProperty("--y",y);
         document.body.appendChild(heart);
-
-        setTimeout(() => {
-            heart.remove();
-        }, 1000);
+        setTimeout(()=>heart.remove(),1000);
     }
 }
 </script>
