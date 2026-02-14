@@ -226,7 +226,6 @@ button:hover{
   <p>Klik kadonya yaa 🎁</p>
 
   <div class="gift" onclick="openGift()">🎁</div>
-
   <div class="envelope" id="envelope" onclick="openLetter()"></div>
 
   <div class="letter" id="letter">
@@ -237,7 +236,8 @@ button:hover{
     I love you with everything I have. 💖
   </div>
 
-  <audio id="bgmusic" src="musik.mp3"></audio>
+  <!-- MUSIK -->
+  <audio id="bgmusic" src="musik.mp3" loop></audio>
 </div>
 
 <script>
@@ -269,6 +269,11 @@ function openGift(){
 
   const screen=document.getElementById("screen4");
   screen.classList.add("glow");
+
+  // MAINKAN MUSIK
+  const bgmusic=document.getElementById("bgmusic");
+  bgmusic.volume = 0.3; // volume lembut
+  bgmusic.play();
 
   // Love burst
   for(let i=0;i<25;i++){
@@ -316,7 +321,12 @@ function openGift(){
 function openLetter(){
   document.getElementById("envelope").classList.add("open");
   document.getElementById("letter").classList.add("open");
-  document.getElementById("bgmusic").play();
+
+  const bgmusic=document.getElementById("bgmusic");
+  if(bgmusic.paused){
+    bgmusic.volume = 0.3;
+    bgmusic.play();
+  }
 }
 </script>
 
