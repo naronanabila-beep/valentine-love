@@ -7,12 +7,11 @@
 <style>
 body{
   margin:0;
-  font-family: 'Segoe UI', cursive;
-  background: linear-gradient(135deg,#ffd6e7,#ffc2d1);
+  font-family:'Segoe UI', cursive;
+  background:linear-gradient(135deg,#ffd6e7,#ffc2d1);
   overflow:hidden;
 }
 
-/* SCREEN */
 .screen{
   display:none;
   height:100vh;
@@ -28,7 +27,6 @@ body{
 
 h1,h2,p{color:#b03060;}
 
-/* INPUT & BUTTON */
 input{
   padding:12px;
   border-radius:20px;
@@ -51,30 +49,28 @@ button{
 
 button:hover{transform:scale(1.1);}
 
-/* YES NO */
 #noBtn{
   position:absolute;
 }
 
-/* GIFT */
 .gift{
-  font-size:90px;
+  font-size:100px;
   cursor:pointer;
   transition:0.4s;
 }
+
 .gift:hover{
   transform:scale(1.2);
 }
 
-/* ENVELOPE */
 .envelope{
-  width:150px;
-  height:95px;
+  width:160px;
+  height:100px;
   background:#ff4d6d;
   position:relative;
   border-radius:10px;
   cursor:pointer;
-  margin-top:25px;
+  margin-top:20px;
   transition:0.6s;
 }
 
@@ -83,8 +79,8 @@ button:hover{transform:scale(1.1);}
   position:absolute;
   top:-50px;
   left:0;
-  border-left:75px solid transparent;
-  border-right:75px solid transparent;
+  border-left:80px solid transparent;
+  border-right:80px solid transparent;
   border-bottom:50px solid #ff4d6d;
   transition:0.6s;
 }
@@ -94,15 +90,14 @@ button:hover{transform:scale(1.1);}
   top:-10px;
 }
 
-/* LETTER */
 .letter{
   background:#fff0f5;
   padding:30px;
-  max-width:500px;
+  max-width:520px;
   border-radius:20px;
-  box-shadow:0 15px 40px rgba(0,0,0,0.2);
+  box-shadow:0 20px 50px rgba(0,0,0,0.2);
   font-size:18px;
-  line-height:1.6;
+  line-height:1.7;
   margin-top:20px;
   opacity:0;
   transform:scale(0.8);
@@ -115,10 +110,15 @@ button:hover{transform:scale(1.1);}
   transform:scale(1);
 }
 
-/* ANIMATION */
+/* FALL ANIMATION */
 @keyframes fall{
-  to{
-    transform:translateY(110vh);
+  0%{
+    transform:translateY(0) rotate(0deg);
+    opacity:1;
+  }
+  100%{
+    transform:translateY(110vh) rotate(360deg);
+    opacity:0.9;
   }
 }
 </style>
@@ -168,7 +168,6 @@ button:hover{transform:scale(1.1);}
     I love you with everything I have. 💖
   </div>
 
-  <!-- MUSIK ONLINE -->
   <audio id="bgmusic" loop>
     <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
   </audio>
@@ -176,6 +175,7 @@ button:hover{transform:scale(1.1);}
 </div>
 
 <script>
+
 function checkPassword(){
   if(document.getElementById("password").value==="04112025"){
     nextScreen(2);
@@ -205,39 +205,34 @@ function openGift(){
   const music = document.getElementById("bgmusic");
   music.play().catch(()=>{});
 
-  // HATI JATUH
-  setInterval(function(){
-    const heart=document.createElement("div");
-    heart.innerHTML="💖";
-    heart.style.position="fixed";
-    heart.style.top="-40px";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=(20+Math.random()*25)+"px";
-    heart.style.zIndex="9999";
-    heart.style.animation="fall "+(3+Math.random()*3)+"s linear forwards";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),6000);
-  },300);
+  for(let i=0;i<50;i++){
 
-  // KELOPAK BUNGA
-  setInterval(function(){
-    const flower=document.createElement("div");
-    flower.innerHTML="🌸";
-    flower.style.position="fixed";
-    flower.style.top="-40px";
-    flower.style.left=Math.random()*100+"vw";
-    flower.style.fontSize=(18+Math.random()*20)+"px";
-    flower.style.zIndex="9999";
-    flower.style.animation="fall "+(4+Math.random()*3)+"s linear forwards";
-    document.body.appendChild(flower);
-    setTimeout(()=>flower.remove(),7000);
-  },500);
+    setTimeout(()=>{
+
+      const item=document.createElement("div");
+      item.innerHTML=Math.random()>0.5?"💖":"🌸";
+
+      item.style.position="fixed";
+      item.style.top="-50px";
+      item.style.left=Math.random()*100+"vw";
+      item.style.fontSize=(20+Math.random()*30)+"px";
+      item.style.pointerEvents="none";
+      item.style.zIndex="99999";
+      item.style.animation="fall "+(4+Math.random()*3)+"s linear forwards";
+
+      document.body.appendChild(item);
+
+      setTimeout(()=>item.remove(),8000);
+
+    },i*120);
+  }
 }
 
 function openLetter(){
   document.getElementById("envelope").classList.add("open");
   document.getElementById("letter").classList.add("open");
 }
+
 </script>
 
 </body>
