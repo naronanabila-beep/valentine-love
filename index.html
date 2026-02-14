@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For My Love 💖</title>
+<title>For My Sweet Love 💖</title>
 
 <style>
 body{
     margin:0;
-    font-family:Georgia, serif;
-    background:linear-gradient(to top,#ffd1dc,#ff9eb5);
+    font-family:'Georgia', serif;
+    background:linear-gradient(to top,#ffd6e8,#ffc2d1);
     overflow:hidden;
     text-align:center;
 }
@@ -20,100 +20,114 @@ body{
     justify-content:center;
     align-items:center;
     flex-direction:column;
+    padding:20px;
 }
+.active{display:flex;}
 
-.active{
-    display:flex;
-}
-
-h1,h2{
-    color:#b30059;
-}
+h1,h2,p{color:#b03060;}
 
 button{
-    padding:10px 20px;
+    padding:12px 25px;
     border:none;
-    border-radius:20px;
+    border-radius:25px;
     font-size:16px;
     cursor:pointer;
     margin:10px;
-    background:#ff4d88;
+    background:#ff69b4;
     color:white;
+    transition:0.3s;
+}
+button:hover{transform:scale(1.1);}
+
+#noBtn{position:absolute;}
+#yesBtn{transition:0.3s;}
+
+input{
+    padding:10px;
+    border-radius:20px;
+    border:none;
+    text-align:center;
 }
 
-button:hover{
-    background:#ff1a75;
+/* KADO */
+.gift{
+    font-size:80px;
+    cursor:pointer;
+    transition:0.3s;
 }
+.gift:hover{transform:scale(1.2);}
 
-/* tombol no kabur */
-#noBtn{
-    position:absolute;
-}
-
-/* Love jatuh */
-.falling-heart{
-    position:absolute;
-    font-size:22px;
-    animation:fall linear infinite;
-}
-@keyframes fall{
-    0%{transform:translateY(-10vh);}
-    100%{transform:translateY(110vh);}
-}
-
-/* Envelope */
+/* ENVELOPE */
 .envelope{
-    width:340px;
-    height:240px;
+    width:300px;
+    height:200px;
     background:white;
     border-radius:15px;
     position:relative;
-    cursor:pointer;
-    box-shadow:0 15px 40px rgba(255,105,180,0.4);
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
     overflow:hidden;
+    margin-top:20px;
 }
 
 .flap{
     position:absolute;
     width:100%;
     height:100%;
-    background:#ff6f91;
+    background:#ff8fab;
     clip-path:polygon(0 0,50% 50%,100% 0);
-    transition:1s;
     transform-origin:top;
+    transition:1s;
 }
 
 .letter{
     position:absolute;
     width:90%;
     height:90%;
-    background:#fff0f5;
     top:5%;
     left:5%;
-    padding:20px;
-    border-radius:12px;
+    background:#fff0f5;
+    border-radius:10px;
+    padding:15px;
     opacity:0;
     transition:1s 1s;
-    color:#b30059;
-    line-height:1.7;
+    color:#b03060;
+    line-height:1.6;
 }
 
-.open .flap{
-    transform:rotateX(180deg);
-}
-.open .letter{
-    opacity:1;
-}
+.open .flap{transform:rotateX(180deg);}
+.open .letter{opacity:1;}
 
-/* LOVE MELEDAK */
-.explode{
+/* LOVE BESAR TERBANG */
+.bigLove{
     position:absolute;
-    font-size:28px;
-    animation:boom 1s forwards;
+    font-size:60px;
+    animation:floatUp 6s linear infinite;
 }
-@keyframes boom{
-    0%{transform:translate(-50%,-50%) scale(1);opacity:1;}
-    100%{transform:translate(var(--x),var(--y)) scale(1.5);opacity:0;}
+@keyframes floatUp{
+    0%{transform:translateY(100vh);}
+    100%{transform:translateY(-10vh);}
+}
+
+/* HATI JATUH */
+.fallHeart{
+    position:absolute;
+    font-size:22px;
+    animation:fall 5s linear infinite;
+}
+@keyframes fall{
+    0%{transform:translateY(-10vh);}
+    100%{transform:translateY(110vh);}
+}
+
+/* KELOPAK BUNGA */
+.petal{
+    position:absolute;
+    font-size:20px;
+    animation:petalFall 7s linear infinite;
+}
+@keyframes petalFall{
+    0%{transform:translateY(-10vh) rotate(0deg);}
+    100%{transform:translateY(110vh) rotate(360deg);}
 }
 </style>
 </head>
@@ -121,108 +135,123 @@ button:hover{
 <body>
 
 <!-- SCREEN 1 -->
-<div class="screen active" id="screen1">
-    <h2>Masukan Password 💌</h2>
-    <input type="password" id="passwordInput" placeholder="Passwordnya...">
-    <button onclick="checkPassword()">Masuk</button>
+<div class="screen active" id="s1">
+<h2>Masukan Password 💌</h2>
+<p>Clue: tanggal yang nggak boleh kita lupain 🥺</p>
+<input type="password" id="pass">
+<button onclick="checkPass()">Masuk</button>
 </div>
 
 <!-- SCREEN 2 -->
-<div class="screen" id="screen2">
-    <h2>Passwordnya bener 🥺💖</h2>
-    <p>Keren banget sayang aku. Jangan lupa yaa 04-11-2025 adalah hari kita resmi jadi cerita indah satu sama lain ✨</p>
-    <button onclick="nextScreen(3)">Siap untuk next love 💘</button>
+<div class="screen" id="s2">
+<h2>Passwordnya bener 😭💖</h2>
+<p>Keren banget sayang aku. 
+    04-11-2025 itu hari dimana kita resmi jadi 
+    cerita terindah satu sama lain. 
+    Jangan pernah lupa yaa ✨</p>
+<button onclick="next(3)">Siap untuk next love 💘</button>
 </div>
 
 <!-- SCREEN 3 -->
-<div class="screen" id="screen3">
-    <h1>Will You Be My Valentine? 💖</h1>
-    <button onclick="yesAnswer()">YES 💕</button>
-    <button id="noBtn" onmouseover="moveNo()">NO 😏</button>
+<div class="screen" id="s3">
+<h1>Will You Be My Valentine? 💖</h1>
+<button id="yesBtn" onclick="yesClick()">YES 💕</button>
+<button id="noBtn" onmouseover="moveNo()">NO 😏</button>
 </div>
 
 <!-- SCREEN 4 -->
-<div class="screen" id="screen4">
-    <h2>Yayyy 💖 Thank you for being my Valentine!</h2>
-    
+<div class="screen" id="s4">
+<h2>Yayyy 💖 Thank you for being my Valentine!</h2>
+<p>Klik kadonya yaa 🎁</p>
+<div class="gift" onclick="openGift()">🎁</div>
+
+<div id="letterArea" style="display:none;">
     <div class="envelope" onclick="openLetter(this)">
         <div class="flap"></div>
         <div class="letter">
-            Hi ayang, makasi ya udah hadir di hidup aku dan isi hari-hari aku yang suram ini jadi berwarna. 
-            Kehadiran ayang selalu punya arti tersendiri buat aku. 
-            Aku bahagia banget punya ayang. 
-            Tolong cintai aku terus yaa. 
-            I love you with everything I have. 💖
+        Hi ayang, makasi ya udah hadir di hidup aku dan 
+        isi hari-hari aku yang suram ini jadi berwarna. 
+        Kehadiran ayang selalu punya arti tersendiri buat aku. 
+        Aku bahagia banget punya ayang. 
+        Tolong cintai aku terus yaa. 
+        I love you with everything I have. 💖
         </div>
     </div>
+</div>
 
-    <audio id="music" loop>
-        <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3">
-    </audio>
+<audio id="music" loop>
+<source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3">
+</audio>
+
 </div>
 
 <script>
-function nextScreen(num){
-    document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-    document.getElementById("screen"+num).classList.add("active");
+function next(n){
+document.querySelectorAll(".screen").forEach(e=>e.classList.remove("active"));
+document.getElementById("s"+n).classList.add("active");
 }
 
-function checkPassword(){
-    let pass=document.getElementById("passwordInput").value;
-    if(pass==="04112025"){
-        nextScreen(2);
-    }else{
-        alert("Salahhh 🥺 coba lagi");
-    }
+function checkPass(){
+if(document.getElementById("pass").value==="04112025"){
+next(2);
+}else{
+alert("Salahhh 🥺 coba lagi");
+}
 }
 
-function yesAnswer(){
-    nextScreen(4);
-    document.getElementById("music").play();
+function yesClick(){
+next(4);
+document.getElementById("music").play();
 }
 
 function moveNo(){
-    let btn=document.getElementById("noBtn");
-    btn.style.top=Math.random()*80+"%";
-    btn.style.left=Math.random()*80+"%";
+let no=document.getElementById("noBtn");
+no.style.top=Math.random()*80+"%";
+no.style.left=Math.random()*80+"%";
+
+let yes=document.getElementById("yesBtn");
+yes.style.transform="scale(1.2)";
 }
 
-/* Love jatuh */
-function createHeart(){
-    const heart=document.createElement("div");
-    heart.classList.add("falling-heart");
-    heart.innerHTML="❤️";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.animationDuration=(Math.random()*3+2)+"s";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),5000);
+/* buka kado */
+function openGift(){
+document.getElementById("letterArea").style.display="block";
+createEffects();
 }
-setInterval(createHeart,300);
 
-/* Surat buka + meledak */
-let exploded=false;
+/* buka surat */
 function openLetter(el){
-    el.classList.toggle("open");
-    if(!exploded){
-        explodeLove();
-        exploded=true;
-    }
+el.classList.toggle("open");
 }
 
-function explodeLove(){
-    for(let i=0;i<25;i++){
-        const heart=document.createElement("div");
-        heart.classList.add("explode");
-        heart.innerHTML="💖";
-        heart.style.left="50%";
-        heart.style.top="50%";
-        let x=(Math.random()-0.5)*600+"px";
-        let y=(Math.random()-0.5)*600+"px";
-        heart.style.setProperty("--x",x);
-        heart.style.setProperty("--y",y);
-        document.body.appendChild(heart);
-        setTimeout(()=>heart.remove(),1000);
-    }
+/* efek love & bunga */
+function createEffects(){
+setInterval(()=>{
+let love=document.createElement("div");
+love.className="bigLove";
+love.innerHTML="💖";
+love.style.left=Math.random()*100+"vw";
+document.body.appendChild(love);
+setTimeout(()=>love.remove(),6000);
+},800);
+
+setInterval(()=>{
+let heart=document.createElement("div");
+heart.className="fallHeart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),5000);
+},500);
+
+setInterval(()=>{
+let petal=document.createElement("div");
+petal.className="petal";
+petal.innerHTML="🌸";
+petal.style.left=Math.random()*100+"vw";
+document.body.appendChild(petal);
+setTimeout(()=>petal.remove(),7000);
+},700);
 }
 </script>
 
