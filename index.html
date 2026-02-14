@@ -12,6 +12,7 @@ body{
   overflow:hidden;
 }
 
+/* SCREEN */
 .screen{
   display:none;
   height:100vh;
@@ -25,6 +26,9 @@ body{
 
 .active{display:flex;}
 
+h1,h2,p{color:#b03060;}
+
+/* INPUT & BUTTON */
 input{
   padding:12px;
   border-radius:20px;
@@ -47,34 +51,41 @@ button{
 
 button:hover{transform:scale(1.1);}
 
-#noBtn{position:absolute;}
+/* YES NO */
+#noBtn{
+  position:absolute;
+}
 
+/* GIFT */
 .gift{
-  font-size:80px;
+  font-size:90px;
   cursor:pointer;
   transition:0.4s;
 }
-.gift:hover{transform:scale(1.2);}
+.gift:hover{
+  transform:scale(1.2);
+}
 
+/* ENVELOPE */
 .envelope{
-  width:140px;
-  height:90px;
+  width:150px;
+  height:95px;
   background:#ff4d6d;
   position:relative;
   border-radius:10px;
   cursor:pointer;
-  margin-top:20px;
+  margin-top:25px;
   transition:0.6s;
 }
 
 .envelope:before{
   content:"";
   position:absolute;
-  top:-45px;
+  top:-50px;
   left:0;
-  border-left:70px solid transparent;
-  border-right:70px solid transparent;
-  border-bottom:45px solid #ff4d6d;
+  border-left:75px solid transparent;
+  border-right:75px solid transparent;
+  border-bottom:50px solid #ff4d6d;
   transition:0.6s;
 }
 
@@ -83,6 +94,7 @@ button:hover{transform:scale(1.1);}
   top:-10px;
 }
 
+/* LETTER */
 .letter{
   background:#fff0f5;
   padding:30px;
@@ -95,6 +107,7 @@ button:hover{transform:scale(1.1);}
   opacity:0;
   transform:scale(0.8);
   transition:1s;
+  z-index:2;
 }
 
 .letter.open{
@@ -102,24 +115,11 @@ button:hover{transform:scale(1.1);}
   transform:scale(1);
 }
 
-.falling-heart{
-  position:fixed;
-  top:-50px;
-  font-size:30px;
-  animation:fall linear forwards;
-  z-index:0;
-}
-
-.petal{
-  position:fixed;
-  top:-20px;
-  font-size:24px;
-  animation:fall linear forwards;
-  z-index:0;
-}
-
+/* ANIMATION */
 @keyframes fall{
-  to{transform:translateY(110vh);}
+  to{
+    transform:translateY(110vh);
+  }
 }
 </style>
 </head>
@@ -138,7 +138,7 @@ button:hover{transform:scale(1.1);}
 <!-- SCREEN 2 -->
 <div class="screen" id="screen2">
   <h2>Passwordnya bener 😍</h2>
-  <p>Keren banget sayang aku! Jangan pernah lupa tanggal spesial kita yaa 💖</p>
+  <p>04-11-2025 itu hari kita jadi cerita paling indah satu sama lain 💖 jangan pernah lupa yaa.</p>
   <button onclick="nextScreen(3)">Siap untuk next love 💘</button>
 </div>
 
@@ -168,8 +168,8 @@ button:hover{transform:scale(1.1);}
     I love you with everything I have. 💖
   </div>
 
-  <!-- MUSIK ONLINE AUTO PLAY -->
-  <audio id="bgmusic" autoplay loop>
+  <!-- MUSIK ONLINE -->
+  <audio id="bgmusic" loop>
     <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
   </audio>
 
@@ -191,7 +191,7 @@ function nextScreen(num){
 
 function goToLove(){
   nextScreen(4);
-  document.getElementById("bgmusic").play();
+  document.getElementById("bgmusic").play().catch(()=>{});
 }
 
 function moveNo(){
@@ -201,24 +201,36 @@ function moveNo(){
 }
 
 function openGift(){
-  setInterval(()=>{
+
+  const music = document.getElementById("bgmusic");
+  music.play().catch(()=>{});
+
+  // HATI JATUH
+  setInterval(function(){
     const heart=document.createElement("div");
-    heart.className="falling-heart";
     heart.innerHTML="💖";
+    heart.style.position="fixed";
+    heart.style.top="-40px";
     heart.style.left=Math.random()*100+"vw";
-    heart.style.animationDuration=(3+Math.random()*3)+"s";
+    heart.style.fontSize=(20+Math.random()*25)+"px";
+    heart.style.zIndex="9999";
+    heart.style.animation="fall "+(3+Math.random()*3)+"s linear forwards";
     document.body.appendChild(heart);
     setTimeout(()=>heart.remove(),6000);
   },300);
 
-  setInterval(()=>{
-    const petal=document.createElement("div");
-    petal.className="petal";
-    petal.innerHTML="🌸";
-    petal.style.left=Math.random()*100+"vw";
-    petal.style.animationDuration=(4+Math.random()*3)+"s";
-    document.body.appendChild(petal);
-    setTimeout(()=>petal.remove(),7000);
+  // KELOPAK BUNGA
+  setInterval(function(){
+    const flower=document.createElement("div");
+    flower.innerHTML="🌸";
+    flower.style.position="fixed";
+    flower.style.top="-40px";
+    flower.style.left=Math.random()*100+"vw";
+    flower.style.fontSize=(18+Math.random()*20)+"px";
+    flower.style.zIndex="9999";
+    flower.style.animation="fall "+(4+Math.random()*3)+"s linear forwards";
+    document.body.appendChild(flower);
+    setTimeout(()=>flower.remove(),7000);
   },500);
 }
 
