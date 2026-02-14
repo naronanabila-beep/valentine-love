@@ -1,27 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>For My Valentine 💖</title>
 
 <style>
-body{
+html, body{
   margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
   font-family:'Segoe UI', cursive;
-  background: linear-gradient(135deg,#ffd6e7,#ffc2d1);
   overflow:hidden;
+  background: linear-gradient(135deg,#ffd6e7,#ffc2d1);
 }
 
 /* SCREEN */
 .screen{
   display:none;
-  height:100vh;
-  width:100vw;
+  width:100%;
+  height:100%;
   position:relative;
+  display:flex;
   justify-content:center;
   align-items:center;
   flex-direction:column;
   text-align:center;
+  box-sizing:border-box;
 }
 
 .active{
@@ -35,6 +41,7 @@ input{
   border:none;
   text-align:center;
   font-size:16px;
+  outline:none;
 }
 
 button{
@@ -101,7 +108,7 @@ button:hover{
 .letter{
   background:#fff0f5;
   padding:30px;
-  max-width:500px;
+  max-width:90%;
   border-radius:20px;
   box-shadow:0 15px 40px rgba(0,0,0,0.2);
   font-size:18px;
@@ -122,6 +129,8 @@ button:hover{
 #screen4{
   overflow:hidden;
   position:relative;
+  width:100%;
+  height:100%;
 }
 
 /* GLOW */
@@ -136,7 +145,7 @@ button:hover{
 /* FALL ANIMATION */
 @keyframes fall{
   0%{transform:translateY(-50px);opacity:1;}
-  100%{transform:translateY(110vh);opacity:0;}
+  100%{transform:translateY(100vh);opacity:0;}
 }
 
 .falling-heart, .petal, .sparkle{
@@ -181,7 +190,6 @@ button:hover{
   z-index:3;
   animation:burst 1s ease-out forwards;
 }
-
 </style>
 </head>
 
@@ -276,30 +284,30 @@ function openGift(){
     const heart=document.createElement("div");
     heart.className="falling-heart";
     heart.innerHTML="💖";
-    heart.style.left=Math.random()*100+"%";
+    heart.style.left=Math.random()*100+"vw";
     heart.style.animationDuration=(3+Math.random()*3)+"s";
     screen.appendChild(heart);
     setTimeout(()=>heart.remove(),6000);
-  },300);
+  },200);
 
   // Falling flower
   setInterval(()=>{
     const petal=document.createElement("div");
     petal.className="petal";
     petal.innerHTML="🌸";
-    petal.style.left=Math.random()*100+"%";
+    petal.style.left=Math.random()*100+"vw";
     petal.style.animationDuration=(4+Math.random()*3)+"s";
     screen.appendChild(petal);
     setTimeout(()=>petal.remove(),7000);
-  },400);
+  },250);
 
   // Sparkle
   setInterval(()=>{
     const spark=document.createElement("div");
     spark.className="sparkle";
     spark.innerHTML="✨";
-    spark.style.left=Math.random()*100+"%";
-    spark.style.top=Math.random()*100+"%";
+    spark.style.left=Math.random()*100+"vw";
+    spark.style.top=Math.random()*100+"vh";
     screen.appendChild(spark);
     setTimeout(()=>spark.remove(),1500);
   },300);
