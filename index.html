@@ -16,7 +16,9 @@ body{
   display:none;
   height:100vh;
   width:100vw;
-  position:relative;
+  position:absolute;
+  top:0;
+  left:0;
   justify-content:center;
   align-items:center;
   flex-direction:column;
@@ -58,7 +60,6 @@ button:hover{transform:scale(1.1);}
   cursor:pointer;
   transition:0.4s;
 }
-
 .gift:hover{
   transform:scale(1.2);
 }
@@ -110,16 +111,35 @@ button:hover{transform:scale(1.1);}
   transform:scale(1);
 }
 
-/* FALL ANIMATION */
+/* ===== CINEMATIC EFFECT ===== */
+
+.glow{
+  animation:glowbg 2s ease-in-out infinite alternate;
+}
+
+@keyframes glowbg{
+  from{background:#ffd6e7;}
+  to{background:#ff9ac2;}
+}
+
 @keyframes fall{
-  0%{
-    transform:translateY(0) rotate(0deg);
-    opacity:1;
-  }
-  100%{
-    transform:translateY(110vh) rotate(360deg);
-    opacity:0.9;
-  }
+  0%{transform:translateY(-50px) rotate(0deg);opacity:1;}
+  100%{transform:translateY(110vh) rotate(360deg);opacity:0;}
+}
+
+@keyframes burst{
+  0%{transform:scale(0);opacity:1;}
+  100%{transform:scale(3);opacity:0;}
+}
+
+@keyframes sparkle{
+  0%{opacity:0;}
+  50%{opacity:1;}
+  100%{opacity:0;}
+}
+
+#screen4{
+  overflow:visible !important;
 }
 </style>
 </head>
@@ -129,7 +149,7 @@ button:hover{transform:scale(1.1);}
 <!-- SCREEN 1 -->
 <div class="screen active" id="screen1">
   <h2>Masukan passwordnya 💌</h2>
-  <p>Clue: tanggal yang ga boleh dilupain 😉 (8 angka tanpa spasi yaa 💖) (</p>
+  <p>Clue: tanggal yang ga boleh dilupain 😉 (8 angka)</p>
   <input type="password" id="password">
   <br><br>
   <button onclick="checkPassword()">Masuk</button>
@@ -168,14 +188,10 @@ button:hover{transform:scale(1.1);}
     I love you with everything I have. 💖
   </div>
 
-  <audio id="bgmusic" loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
-  </audio>
-
+  <audio id="bgmusic" src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" loop></audio>
 </div>
 
 <script>
-
 function checkPassword(){
   if(document.getElementById("password").value==="04112025"){
     nextScreen(2);
@@ -191,7 +207,6 @@ function nextScreen(num){
 
 function goToLove(){
   nextScreen(4);
-  document.getElementById("bgmusic").play().catch(()=>{});
 }
 
 function moveNo(){
@@ -200,41 +215,68 @@ function moveNo(){
   btn.style.left=Math.random()*80+"vw";
 }
 
+let started=false;
+
 function openGift(){
 
-  const music = document.getElementById("bgmusic");
-  music.play().catch(()=>{});
+  if(started) return;
+  started=true;
 
-  for(let i=0;i<50;i++){
+  document.getElementById("bgmusic").play().catch(()=>{});
+  document.getElementById("screen4").classList.add("glow");
 
-    setTimeout(()=>{
-
-      const item=document.createElement("div");
-      item.innerHTML=Math.random()>0.5?"💖":"🌸";
-
-      item.style.position="fixed";
-      item.style.top="-50px";
-      item.style.left=Math.random()*100+"vw";
-      item.style.fontSize=(20+Math.random()*30)+"px";
-      item.style.pointerEvents="none";
-      item.style.zIndex="99999";
-      item.style.animation="fall "+(4+Math.random()*3)+"s linear forwards";
-
-      document.body.appendChild(item);
-
-      setTimeout(()=>item.remove(),8000);
-
-    },i*120);
+  // LOVE MELEDAK
+  for(let i=0;i<30;i++){
+    let love=document.createElement("div");
+    love.innerHTML="💞";
+    love.style.position="fixed";
+    love.style.left="50%";
+    love.style.top="50%";
+    love.style.transform="translate(-50%,-50%)";
+    love.style.fontSize="30px";
+    love.style.pointerEvents="none";
+    love.style.zIndex="999999";
+    love.style.animation="burst 1s ease-out forwards";
+    document.body.appendChild(love);
+    setTimeout(()=>love.remove(),1000);
   }
+
+  // LOVE & BUNGA JATUH TERUS
+  setInterval(()=>{
+    let item=document.createElement("div");
+    item.innerHTML=Math.random()>0.5?"💖":"🌸";
+    item.style.position="fixed";
+    item.style.left=Math.random()*100+"vw";
+    item.style.top="-50px";
+    item.style.fontSize=(20+Math.random()*30)+"px";
+    item.style.pointerEvents="none";
+    item.style.zIndex="999999";
+    item.style.animation="fall "+(4+Math.random()*3)+"s linear forwards";
+    document.body.appendChild(item);
+    setTimeout(()=>item.remove(),7000);
+  },300);
+
+  // SPARKLE
+  setInterval(()=>{
+    let star=document.createElement("div");
+    star.innerHTML="✨";
+    star.style.position="fixed";
+    star.style.left=Math.random()*100+"vw";
+    star.style.top=Math.random()*100+"vh";
+    star.style.fontSize="18px";
+    star.style.pointerEvents="none";
+    star.style.zIndex="999999";
+    star.style.animation="sparkle 1.5s ease-in-out";
+    document.body.appendChild(star);
+    setTimeout(()=>star.remove(),1500);
+  },400);
 }
 
 function openLetter(){
   document.getElementById("envelope").classList.add("open");
   document.getElementById("letter").classList.add("open");
 }
-
 </script>
 
 </body>
 </html>
-
