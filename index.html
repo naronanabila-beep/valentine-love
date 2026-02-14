@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Valentine 💖</title>
+<title>My Sweet Valentine 💖</title>
 
 <style>
 body {
     margin: 0;
     padding: 0;
     font-family: 'Georgia', serif;
-    background: linear-gradient(to top, #ffdde1, #ee9ca7);
+    background: linear-gradient(to top, #ffd1dc, #ff9eb5);
     overflow: hidden;
     text-align: center;
 }
@@ -18,36 +18,48 @@ body {
 /* Love besar background */
 .big-heart {
     position: absolute;
-    font-size: 200px;
-    color: rgba(255, 0, 100, 0.15);
+    font-size: 260px;
+    color: rgba(255, 20, 147, 0.2);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    animation: pulse 2s infinite;
+    animation: pulse 2.5s infinite;
+    text-shadow: 0 0 40px rgba(255, 105, 180, 0.6);
 }
 
 @keyframes pulse {
     0% { transform: translate(-50%, -50%) scale(1); }
-    50% { transform: translate(-50%, -50%) scale(1.1); }
+    50% { transform: translate(-50%, -50%) scale(1.15); }
     100% { transform: translate(-50%, -50%) scale(1); }
 }
 
-/* Surat */
+h1 {
+    margin-top: 40px;
+    color: #b30059;
+    font-size: 30px;
+}
+
+/* Envelope */
 .letter-container {
     position: relative;
-    margin-top: 120px;
+    margin-top: 100px;
 }
 
 .envelope {
-    width: 320px;
-    height: 220px;
+    width: 340px;
+    height: 240px;
     background: #fff;
     margin: auto;
     position: relative;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    border-radius: 15px;
+    box-shadow: 0 15px 40px rgba(255, 105, 180, 0.4);
     cursor: pointer;
     overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.envelope:hover {
+    transform: scale(1.05);
 }
 
 .flap {
@@ -64,17 +76,17 @@ body {
     position: absolute;
     width: 90%;
     height: 90%;
-    background: #fff0f5;
+    background: linear-gradient(to bottom, #fff0f5, #ffe4ec);
     top: 5%;
     left: 5%;
-    padding: 20px;
+    padding: 25px;
     box-sizing: border-box;
-    border-radius: 10px;
+    border-radius: 12px;
     opacity: 0;
     transition: opacity 1s ease 1s;
-    font-size: 16px;
-    line-height: 1.6;
-    color: #c2185b;
+    font-size: 17px;
+    line-height: 1.8;
+    color: #b30059;
 }
 
 .open .flap {
@@ -98,22 +110,22 @@ body {
     100% { transform: translateY(110vh); }
 }
 
-/* Bunga */
-.flower {
+/* LOVE MELEDAK */
+.explode-heart {
     position: absolute;
     font-size: 30px;
-    animation: float 6s infinite ease-in-out;
+    animation: explode 1s ease-out forwards;
 }
 
-@keyframes float {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
-}
-
-h1 {
-    margin-top: 40px;
-    color: #b30059;
-    font-size: 28px;
+@keyframes explode {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--x), var(--y)) scale(1.5);
+        opacity: 0;
+    }
 }
 </style>
 </head>
@@ -145,8 +157,15 @@ h1 {
 </audio>
 
 <script>
+let exploded = false;
+
 function openLetter(element) {
     element.classList.toggle("open");
+
+    if (!exploded) {
+        explodeHearts();
+        exploded = true;
+    }
 }
 
 /* Love jatuh */
@@ -165,21 +184,28 @@ function createHeart() {
 
 setInterval(createHeart, 300);
 
-/* Bunga random */
-function createFlower() {
-    const flower = document.createElement("div");
-    flower.classList.add("flower");
-    flower.innerHTML = "🌸";
-    flower.style.left = Math.random() * 100 + "vw";
-    flower.style.top = Math.random() * 100 + "vh";
-    document.body.appendChild(flower);
+/* LOVE MELEDAK FUNCTION */
+function explodeHearts() {
+    for (let i = 0; i < 25; i++) {
+        const heart = document.createElement("div");
+        heart.classList.add("explode-heart");
+        heart.innerHTML = "💖";
+        heart.style.left = "50%";
+        heart.style.top = "50%";
 
-    setTimeout(() => {
-        flower.remove();
-    }, 6000);
+        let x = (Math.random() - 0.5) * 600 + "px";
+        let y = (Math.random() - 0.5) * 600 + "px";
+
+        heart.style.setProperty("--x", x);
+        heart.style.setProperty("--y", y);
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 1000);
+    }
 }
-
-setInterval(createFlower, 2000);
 </script>
 
 </body>
