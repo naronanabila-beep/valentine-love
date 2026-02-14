@@ -1,196 +1,105 @@
-import React, { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { Heart } from "lucide-react";
-
-export default function ValentineLoveRoom() {
-  const [screen, setScreen] = useState(1);
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [yesSize, setYesSize] = useState(1);
-  const [openGift, setOpenGift] = useState(false);
-  const [fallingHearts, setFallingHearts] = useState([]);
-  const [noPosition, setNoPosition] = useState({ top: 0, left: 0 });
-  const audioRef = useRef(null);
-
-  const correctPassword = "04112025";
-
-  const handlePassword = () => {
-    if (password === correctPassword) {
-      setScreen(2);
-      setError("");
-    } else {
-      setError("Hmm... kayaknya salah deh. Coba inget lagi tanggal penting kita 💭");
-    }
-  };
-
-  // Play music automatically when entering screen 4
-  useEffect(() => {
-    if (screen === 4 && audioRef.current) {
-      audioRef.current.play().catch(() => {});
-    }
-  }, [screen]);
-
-  // Generate falling hearts on last screen
-  useEffect(() => {
-    if (screen === 4) {
-      const interval = setInterval(() => {
-        setFallingHearts((prev) => [
-          ...prev,
-          {
-            id: Math.random(),
-            left: Math.random() * 100,
-            size: Math.random() * 20 + 15,
-            duration: Math.random() * 3 + 4,
-          },
-        ]);
-      }, 400);
-      return () => clearInterval(interval);
-    }
-  }, [screen]);
-
-  const moveNoButton = () => {
-    const randomTop = Math.random() * 200 - 100;
-    const randomLeft = Math.random() * 200 - 100;
-    setNoPosition({ top: randomTop, left: randomLeft });
-    setYesSize((prev) => prev + 0.1);
-  };
-
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-rose-100 via-pink-50 to-amber-50 text-rose-900 p-6 overflow-hidden relative">
-      <div className="w-full max-w-xl relative">
-
-        {/* SCREEN 1 */}
-        {screen === 1 && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white/80 p-10 rounded-3xl shadow-2xl text-center">
-            <h1 className="text-2xl font-bold mb-4">Masukin password dulu yaa 💌</h1>
-            <p className="mb-6 text-sm text-rose-700">Petunjuk kecil: tanggal yang nggak akan pernah aku lupa.</p>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="border border-rose-300 rounded-full px-4 py-2 w-full text-center mb-4"
-              placeholder="••••••••"
-            />
-            {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
-            <button onClick={handlePassword} className="bg-rose-700 text-white px-6 py-2 rounded-full hover:bg-rose-800 transition">
-              Buka 💖
-            </button>
-          </motion.div>
-        )}
-
-        {/* SCREEN 2 */}
-        {screen === 2 && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white/80 p-10 rounded-3xl shadow-2xl text-center">
-            <h1 className="text-2xl font-bold mb-4">Passwordnya bener... 🥹</h1>
-            <p className="mb-6 leading-relaxed">
-              Kamu inget tanggal jadian kita. Buat aku itu bukan cuma angka,
-              tapi hari dimana hidup aku mulai terasa lebih hangat karena ada kamu.
-            </p>
-            <p className="mb-6 font-semibold">Siap lanjut ke next love? 💕</p>
-            <button onClick={() => setScreen(3)} className="bg-rose-700 text-white px-6 py-2 rounded-full hover:bg-rose-800 transition">
-              Siap dong ✨
-            </button>
-          </motion.div>
-        )}
-
-        {/* SCREEN 3 */}
-        {screen === 3 && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white/80 p-10 rounded-3xl shadow-2xl text-center relative h-64">
-            <h1 className="text-3xl font-bold mb-8">Will you be my Valentine? ❤️</h1>
-            <div className="relative flex justify-center items-center h-32">
-              <button
-                onClick={() => setScreen(4)}
-                style={{ transform: `scale(${yesSize})` }}
-                className="bg-rose-700 text-white px-6 py-3 rounded-full hover:bg-rose-800 transition-all z-10"
-              >
-                Yes 💘
-              </button>
-
-              <motion.button
-                onMouseEnter={moveNoButton}
-                animate={{ top: noPosition.top, left: noPosition.left }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className="absolute bg-gray-300 text-gray-700 px-6 py-3 rounded-full hover:bg-gray-400 transition-all"
-              >
-                No 🙈
-              </motion.button>
-            </div>
-          </motion.div>
-        )}
-
-        {/* SCREEN 4 */}
-        {screen === 4 && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-rose-800 text-white p-10 rounded-3xl shadow-2xl text-center relative overflow-hidden">
-            <audio ref={audioRef} src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" autoPlay loop />
-
-            <Heart className="mx-auto mb-4" size={40} />
-            <h1 className="text-2xl font-bold mb-4">You are officially my Valentine 💖</h1>
-            <p className="mb-8">Sekarang waktunya buka hadiah kecil ini...</p>
-
-            {!openGift && (
-              <div className="flex flex-col items-center gap-4">
-                <div className="text-6xl animate-bounce">🎁</div>
-                <button
-                  onClick={() => setOpenGift(true)}
-                  className="bg-white text-rose-800 px-6 py-2 rounded-full hover:bg-rose-100 transition"
-                >
-                  Buka Hadiahnya 💌
-                </button>
-              </div>
-            )}
-
-            {openGift && (
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                className="mt-8 relative z-10 flex flex-col items-center"
-              >
-                {/* Envelope */}
-                <div className="relative w-72 h-48">
-                  {/* Back of envelope */}
-                  <div className="absolute inset-0 bg-white rounded-xl shadow-xl" />
-
-                  {/* Flap */}
-                  <motion.div
-                    initial={{ rotateX: 0 }}
-                    animate={{ rotateX: -180 }}
-                    transition={{ duration: 1 }}
-                    style={{ transformOrigin: "top" }}
-                    className="absolute top-0 left-0 w-full h-24 bg-rose-200 rounded-t-xl"
-                  />
-                </div>
-
-                {/* Letter appears after flap animation */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.2, duration: 0.8 }}
-                  className="mt-6 bg-white text-rose-900 p-6 rounded-2xl shadow-xl max-w-md"
-                >
-                  <div className="text-4xl mb-3 text-center">💌</div>
-                  <p className="leading-relaxed text-left">
-                    Hi ayang, makasi ya udah hadir di hidup aku dan isi hari-hari aku yang suram ini jadi berwarna. Kehadiran ayang selalu punya arti tersendiri buat aku. Aku bahagia banget punya ayang. Tolong cintai aku terus yaa. I love you with everything I have.
-                  </p>
-                </motion.div>
-              </motion.div>
-            )}
-          </motion.div>
-        )}
-      </div>
-
-      {/* Falling Hearts Animation */}
-      {screen === 4 && fallingHearts.map((heart) => (
-        <motion.div
-          key={heart.id}
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: "110vh", opacity: 1 }}
-          transition={{ duration: heart.duration }}
-          style={{ left: `${heart.left}%`, fontSize: heart.size }}
-          className="absolute text-pink-400 pointer-events-none"
-        >
-          ❤️
-        </motion.div>
-      ))}
-    </div>
-  );
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>For My Valentine 💖</title>
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(#ffd6e7,#fff);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  overflow:hidden;
+  text-align:center;
 }
+
+.card{
+  background:white;
+  padding:40px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+  position:relative;
+}
+
+button{
+  padding:12px 25px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  margin:10px;
+}
+
+.yes{
+  background:#e11d48;
+  color:white;
+  transition:0.3s;
+}
+
+.no{
+  background:#ccc;
+  position:absolute;
+}
+
+.heart{
+  position:absolute;
+  color:pink;
+  animation:fall linear forwards;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(100vh);
+    opacity:0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="screen">
+  <h1>Will you be my Valentine? ❤️</h1>
+  <button class="yes" onclick="yesClick()">Yes 💘</button>
+  <button class="no" id="noBtn">No 🙈</button>
+</div>
+
+<script>
+let yesSize = 1;
+const noBtn = document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseover", ()=>{
+  const x = Math.random() * 200 - 100;
+  const y = Math.random() * 200 - 100;
+  noBtn.style.transform = `translate(${x}px,${y}px)`;
+  yesSize += 0.1;
+  document.querySelector(".yes").style.transform = `scale(${yesSize})`;
+});
+
+function yesClick(){
+  document.getElementById("screen").innerHTML = `
+    <h1>You are officially my Valentine 💖</h1>
+    <p>I love you more than words can say.</p>
+  `;
+  startHearts();
+}
+
+function startHearts(){
+  setInterval(()=>{
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML="❤️";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=(Math.random()*20+20)+"px";
+    heart.style.animationDuration=(Math.random()*3+3)+"s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+  },400);
+}
+</script>
+
+</body>
+</html>
