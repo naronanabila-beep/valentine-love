@@ -6,7 +6,6 @@
 <title>For My Valentine 💖</title>
 
 <style>
-/* BODY & FULL SCREEN */
 html, body{
   margin:0;
   padding:0;
@@ -17,7 +16,6 @@ html, body{
   background: linear-gradient(135deg,#ffd6e7,#ffc2d1);
 }
 
-/* SCREEN */
 .screen{
   display:none;
   width:100%;
@@ -34,7 +32,6 @@ html, body{
   display:flex;
 }
 
-/* INPUT */
 input{
   padding:12px;
   border-radius:20px;
@@ -60,12 +57,10 @@ button:hover{
   transform:scale(1.1);
 }
 
-/* YES NO BUTTON */
 #noBtn{
   position:absolute;
 }
 
-/* GIFT */
 .gift{
   font-size:80px;
   cursor:pointer;
@@ -75,7 +70,6 @@ button:hover{
   transform:scale(1.2);
 }
 
-/* ENVELOPE */
 .envelope{
   width:140px;
   height:90px;
@@ -104,7 +98,6 @@ button:hover{
   top:-10px;
 }
 
-/* LETTER */
 .letter{
   background:#fff0f5;
   padding:30px;
@@ -125,7 +118,6 @@ button:hover{
   transform:scale(1);
 }
 
-/* SCREEN 4 FIX */
 #screen4{
   overflow:hidden;
   position:relative;
@@ -133,7 +125,6 @@ button:hover{
   height:100%;
 }
 
-/* GLOW EFFECT */
 .glow{
   animation:glowbg 2s ease-in-out infinite alternate;
 }
@@ -142,7 +133,6 @@ button:hover{
   to{background:#ff9ac2;}
 }
 
-/* FALLING ANIMATION */
 @keyframes fall{
   0%{transform:translateY(-50px);opacity:1;}
   100%{transform:translateY(100vh);opacity:0;}
@@ -164,7 +154,6 @@ button:hover{
   animation:fall linear forwards;
 }
 
-/* SPARKLE */
 .sparkle{
   font-size:18px;
   animation:twinkle 1.5s ease-in-out forwards;
@@ -176,7 +165,6 @@ button:hover{
   100%{opacity:0;}
 }
 
-/* LOVE BURST */
 @keyframes burst{
   0%{transform:translate(-50%,-50%) scale(0);opacity:1;}
   100%{transform:translate(-50%,-50%) scale(3);opacity:0;}
@@ -201,7 +189,7 @@ button:hover{
   <p>Clue: tanggal yang ga boleh dilupain 😉(8 angka yaaa)</p>
   <input type="password" id="password">
   <br><br>
-  <button onclick="checkPassword()">Masuk</button>
+  <button onclick="checkPassword(); playMusic()">Masuk</button>
 </div>
 
 <!-- SCREEN 2 -->
@@ -225,7 +213,7 @@ button:hover{
   <h1>Yayyy 💖 Thank you for being my Valentine!</h1>
   <p>Klik kadonya yaa 🎁</p>
 
-  <div class="gift" onclick="openGift()">🎁</div>
+  <div class="gift" onclick="openGift(); playMusic()">🎁</div>
   <div class="envelope" id="envelope" onclick="openLetter()"></div>
 
   <div class="letter" id="letter">
@@ -236,12 +224,21 @@ button:hover{
     I love you with everything I have. 💖
   </div>
 
-  <!-- MUSIK AUTOPLAY DARI AWAL -->
-  <audio id="bgmusic" src="musik.mp3" autoplay loop playsinline></audio>
+  <!-- MUSIK -->
+  <audio id="bgmusic" src="musik.mp3" loop playsinline></audio>
 </div>
 
 <script>
 let started=false;
+
+function playMusic(){
+  const bgmusic=document.getElementById("bgmusic");
+  bgmusic.volume = 0.3;
+  const playPromise = bgmusic.play();
+  if(playPromise !== undefined){
+    playPromise.catch(()=>{ console.log("Browser mencegah autoplay, musik akan start setelah klik"); });
+  }
+}
 
 function checkPassword(){
   var pass=document.getElementById("password").value;
@@ -269,13 +266,6 @@ function openGift(){
 
   const screen=document.getElementById("screen4");
   screen.classList.add("glow");
-
-  const bgmusic=document.getElementById("bgmusic");
-  bgmusic.volume = 0.3;
-  const playPromise = bgmusic.play();
-  if(playPromise !== undefined){
-    playPromise.catch(()=>{ console.log("Autoplay diblokir, musik akan start setelah klik"); });
-  }
 
   // Love burst
   for(let i=0;i<25;i++){
@@ -323,28 +313,7 @@ function openGift(){
 function openLetter(){
   document.getElementById("envelope").classList.add("open");
   document.getElementById("letter").classList.add("open");
-
-  const bgmusic=document.getElementById("bgmusic");
-  if(bgmusic.paused){
-    bgmusic.volume = 0.3;
-    const playPromise = bgmusic.play();
-    if(playPromise !== undefined){
-      playPromise.catch(()=>{ console.log("Autoplay diblokir"); });
-    }
-  }
 }
-
-// Coba autoplay musik saat halaman load
-window.addEventListener('load', ()=>{
-  const bgmusic=document.getElementById("bgmusic");
-  bgmusic.volume = 0.3;
-  const playPromise = bgmusic.play();
-  if (playPromise !== undefined) {
-      playPromise.catch(_ => {
-          console.log("Autoplay diblokir, musik akan start setelah klik user");
-      });
-  }
-});
 </script>
 
 </body>
