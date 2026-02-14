@@ -12,7 +12,6 @@ body{
   overflow:hidden;
 }
 
-/* SCREEN */
 .screen{
   display:none;
   height:100vh;
@@ -24,11 +23,8 @@ body{
   text-align:center;
 }
 
-.active{
-  display:flex;
-}
+.active{display:flex;}
 
-/* INPUT */
 input{
   padding:12px;
   border-radius:20px;
@@ -49,26 +45,17 @@ button{
   transition:0.3s;
 }
 
-button:hover{
-  transform:scale(1.1);
-}
+button:hover{transform:scale(1.1);}
 
-/* YES NO */
-#noBtn{
-  position:absolute;
-}
+#noBtn{position:absolute;}
 
-/* GIFT */
 .gift{
   font-size:80px;
   cursor:pointer;
   transition:0.4s;
 }
-.gift:hover{
-  transform:scale(1.2);
-}
+.gift:hover{transform:scale(1.2);}
 
-/* ENVELOPE */
 .envelope{
   width:140px;
   height:90px;
@@ -96,7 +83,6 @@ button:hover{
   top:-10px;
 }
 
-/* LETTER */
 .letter{
   background:#fff0f5;
   padding:30px;
@@ -116,7 +102,6 @@ button:hover{
   transform:scale(1);
 }
 
-/* FALLING HEART */
 .falling-heart{
   position:fixed;
   top:-50px;
@@ -134,9 +119,7 @@ button:hover{
 }
 
 @keyframes fall{
-  to{
-    transform:translateY(110vh);
-  }
+  to{transform:translateY(110vh);}
 }
 </style>
 </head>
@@ -163,7 +146,7 @@ button:hover{
 <div class="screen" id="screen3">
   <h1>Will you be my Valentine? 💕</h1>
   <div>
-    <button onclick="nextScreen(4)">Yes 💖</button>
+    <button onclick="goToLove()">Yes 💖</button>
     <button id="noBtn" onmouseover="moveNo()">No 😏</button>
   </div>
 </div>
@@ -185,13 +168,16 @@ button:hover{
     I love you with everything I have. 💖
   </div>
 
-  <audio id="bgmusic" src="musik.mp3"></audio>
+  <!-- MUSIK ONLINE AUTO PLAY -->
+  <audio id="bgmusic" autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+  </audio>
+
 </div>
 
 <script>
 function checkPassword(){
-  var pass=document.getElementById("password").value;
-  if(pass==="04112025"){
+  if(document.getElementById("password").value==="04112025"){
     nextScreen(2);
   }else{
     alert("Salahh 😜 coba inget lagi!");
@@ -203,6 +189,11 @@ function nextScreen(num){
   document.getElementById("screen"+num).classList.add("active");
 }
 
+function goToLove(){
+  nextScreen(4);
+  document.getElementById("bgmusic").play();
+}
+
 function moveNo(){
   var btn=document.getElementById("noBtn");
   btn.style.top=Math.random()*80+"vh";
@@ -210,8 +201,6 @@ function moveNo(){
 }
 
 function openGift(){
-  document.getElementById("bgmusic").play();
-
   setInterval(()=>{
     const heart=document.createElement("div");
     heart.className="falling-heart";
