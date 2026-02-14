@@ -233,7 +233,7 @@ let started=false;
 
 function playMusic(){
   const bgmusic=document.getElementById("bgmusic");
-  bgmusic.volume = 0.3;
+  bgmusic.volume = 1;
   const playPromise = bgmusic.play();
   if(playPromise !== undefined){
     playPromise.catch(()=>{ console.log("Browser mencegah autoplay, musik akan start setelah klik"); });
@@ -318,3 +318,4 @@ function openLetter(){
 
 </body>
 </html>
+
